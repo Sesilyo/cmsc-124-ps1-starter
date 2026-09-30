@@ -10,7 +10,7 @@ toolchains, and local verification details for the work that the manual defines.
 Replace the two entries below. An assigned trio adds one entry.
 
 - Seth Leander L. Caballero (`Sesilyo`)
-- Marie Toney Fay S. Gelvezon (`@github-username`)
+- Marie Toney Fay S. Gelvezon (`thoenii`)
 
 ## Files You May Change
 
