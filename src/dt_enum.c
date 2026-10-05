@@ -14,8 +14,8 @@
 #include <string.h>
 
 static const char *const COLOR_NAMES[] = { "RED", "GREEN", "BLUE" };
-const MIN_DT_COLOR_COUNT = 0;
-const MAX_DT_COLOR_COUNT = sizeof(COLOR_NAMES) / sizeof(COLOR_NAMES[0]);
+static const int MIN_DT_COLOR_COUNT = 0;
+static const int MAX_DT_COLOR_COUNT = sizeof(COLOR_NAMES) / sizeof(COLOR_NAMES[0]);
 
 /*
  * dt_enum_is_valid returns true for a declared ordinal. C permits any integer
