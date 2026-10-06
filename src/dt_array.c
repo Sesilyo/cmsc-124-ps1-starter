@@ -130,7 +130,7 @@ long long dt_array_lower_bound(const dt_array *a)
 static bool array_offset(const dt_array *a, long long index, size_t *offset_out) {
     if ( index < (a -> lower_bound) ) return false;
 
-    unsigned long long distance = (unsigned long long)( index - (a -> lower_bound) );
+    unsigned long long distance = (unsigned long long)index - (unsigned long long)(a -> lower_bound);
     if ( distance >= (unsigned long long)( a -> length ) ) return false;
 
     *offset_out = (size_t)distance;
