@@ -7,8 +7,6 @@ toolchains, and local verification details for the work that the manual defines.
 
 ## Pair
 
-Replace the two entries below. An assigned trio adds one entry.
-
 - Seth Leander L. Caballero (`Sesilyo`)
 - Marie Toney Fay S. Gelvezon (`thoenii`)
 
