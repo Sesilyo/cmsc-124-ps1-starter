@@ -79,9 +79,9 @@ dt_array *dt_array_new(size_t length, long long lower_bound)
 void dt_array_free(dt_array *a)
 {
     /* TODO: Release the elements. Then release the descriptor.
-        Preserve the referenced values. The driver environment owns them.
-        an array holding a string  -> the element block goes, the string stays
-       dt_array_free(NULL)        -> returns, having done nothing */
+    Preserve the referenced values. The driver environment owns them.
+    an array holding a string  -> the element block goes, the string stays
+    dt_array_free(NULL)        -> returns, having done nothing */
     
     // if array a does not exist
     if (!a) return;
