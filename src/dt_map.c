@@ -64,6 +64,24 @@ size_t dt_map_len(const dt_map *m)
     return 0;
 }
 
+
+
+
+static size_t entry_index(const dt_map *m, const char *key)
+{
+    return ((size_t)(hash_func(key))) % (m -> entry_count);
+}
+
+static struct dt_map_entry *find_in_bucket(struct dt_map_entry *head, const char *key)
+{
+    for (size_t i = 0; head; head -> next) {
+        if (strcmp(head -> key, key) == 0) return head;
+    }
+
+    return NULL;
+}
+
+
 /*
  * dt_map_put binds v to key.
  * An existing key keeps its insertion position. A new key becomes the last key.
@@ -112,14 +130,34 @@ dt_status dt_map_get(const dt_map *m, const char *key, dt_value *out)
 dt_status dt_map_remove(dt_map *m, const char *key)
 {
     /* TODO: Remove the entry from its bucket and insertion position.
-       Release the copied key. Return DT_ERR_KEY when the key is absent.
-       a map holding alpha, beta, gamma:
-         dt_map_remove(m, "alpha")  -> DT_OK, order is now beta, gamma
-         dt_map_remove(m, "ghost")  -> DT_ERR_KEY, nothing changes
-       reinserting "alpha" appends it after "gamma"
-       cases/normal/map_basics.case, cases/boundary/map_remove_missing_key.case */
-    (void)m;
-    (void)key;
+    Release the copied key. Return DT_ERR_KEY when the key is absent.
+    a map holding alpha, beta, gamma:
+        dt_map_remove(m, "alpha")  -> DT_OK, order is now beta, gamma
+        dt_map_remove(m, "ghost")  -> DT_ERR_KEY, nothing changes
+    reinserting "alpha" appends it after "gamma"
+    cases/normal/map_basics.case, cases/boundary/map_remove_missing_key.case */
+    size_t e = entry_index(m, key);
+    struct dt_map_entry **link = &m -> entries[e];
+    while (*link) {
+        if (strcmp((*link) -> key, key) == 0) {
+            struct dt_map_entry *target = *link;
+            *link = target -> next;
+
+
+            size_t idx = 0; // idx since index is already being used
+            while (m -> order[idx] != target) idx++;
+            for (size_t i = idx; i + 1 < (m -> len); i++) {
+                m -> order[i] = m -> order[i + 1]; // shift keys left
+            }
+            (m -> len)--;
+
+            free(target -> key);
+            free(target);
+            return DT_OK;
+        }
+        link = &(*link) -> next;
+    }
+
     return DT_ERR_KEY;
 }
 
